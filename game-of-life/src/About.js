@@ -6,7 +6,7 @@ function About() {
       <h2>About</h2>
       <p>
         A <strong>cellular automaton</strong> consists of a 2D grid of cells, each in a finite number 
-        f states such as on and off.  </p>
+        of states such as on and off.  </p>
       <p>
      <strong>Game of Life</strong> is a very famous cellular automaton devised by the British mathematician{" "}
         <a href="https://en.wikipedia.org/wiki/John_Horton_Conway">
