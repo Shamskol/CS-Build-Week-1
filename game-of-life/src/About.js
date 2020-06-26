@@ -5,12 +5,10 @@ function About() {
     <section className="about">
       <h2>About</h2>
       <p>
-        A <strong>cellular automaton</strong> is a program that operates on data
-        typically stored in a 2D grid.
-      </p>
+        A <strong>cellular automaton</strong> consists of a 2D grid of cells, each in a finite number 
+        f states such as on and off.  </p>
       <p>
-        A very famous cellular automaton is <strong>Game of Life</strong> -
-        devised by the British mathematician{" "}
+     <strong>Game of Life</strong> is a very famous cellular automaton devised by the British mathematician{" "}
         <a href="https://en.wikipedia.org/wiki/John_Horton_Conway">
           John Horton Conway
         </a>{" "}
