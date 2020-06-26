@@ -3,10 +3,8 @@ import ReactDOM from "react-dom";
 import { ButtonToolbar, DropdownButton, } from "react-bootstrap";
 import "./index.css";
 import DropdownItem from "react-bootstrap/DropdownItem";
-
-function arrayClone(arr) {
-  return JSON.parse(JSON.stringify(arr));
-}
+import About from "./About";
+import Rules from "./Rules"
 
 class Box extends React.Component {
   selectBox = () => {
@@ -219,6 +217,8 @@ class Main extends React.Component {
     return (
       <div>
         <h1>The Game of Life</h1>
+        <About/>
+        <Rules/>
         <Buttons
           playButton={this.playButton}
           pauseButton={this.pauseButton}
@@ -235,11 +235,15 @@ class Main extends React.Component {
           selectBox={this.selectBox}
         />
         <h2>Generations: {this.state.generation}</h2>
+      
       </div>
     );
   }
 }
 
+function arrayClone(arr) {
+  return JSON.parse(JSON.stringify(arr));
+}
 
 
 ReactDOM.render(<Main />, document.getElementById("root"));
