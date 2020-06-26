@@ -24,33 +24,39 @@ class Box extends React.Component {
   }
 }
 
-const Grid = props => {
-  const width = props.cols * 14;
+class Grid extends React.Component {
+  render() {
+  const width = this.props.cols * 14;
+  let rowsArr = [];
   let boxClass = "";
-  const rowsArr = props.gridFull.map((rowArr, rowIdx) =>
-    rowArr.map((item, colIdx) => {
-      const boxId = `${rowIdx}_${colIdx}`;
+  for (let i = 0; i < this.props.rows; i++) {
+    for (let j = 0; j < this.props.cols; j++) {
+        
+    
+      let boxId = i + "_" + j;
 
-      boxClass = props.gridFull[rowIdx][colIdx] ? "box on" : "box off";
-      return (
+      boxClass = this.props.gridFull[i][j] ? "box on" : "box off";
+      rowsArr.push(
+      
         <Box
           boxClass={boxClass}
           key={boxId}
           boxId={boxId}
-          row={rowIdx}
-          col={colIdx}
-          selectBox={props.selectBox}
+          row={i}
+          col={j}
+          selectBox={this.props.selectBox}
         />
       );
-    })
-  );
+    }
+  }
 
   return (
-    <div className="grid" style={{ width }}>
+    <div className="grid" style={{ width: width }}>
       {rowsArr}
     </div>
   );
 };
+  }
 
 class Buttons extends React.Component {
   handleSelect = eventKey => {
@@ -109,25 +115,28 @@ class Main extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.seed();
-    this.playButton();
-  }
+  
 
   selectBox = (row, col) => {
-    const gridFull = this.state.gridFull.map((rowArr, rowIdx) =>
-      rowArr.map(
-        (item, colIdx) => (rowIdx === row && colIdx === col ? !item : item)
-      )
-    );
-    this.setState(() => ({ gridFull }));
+    let gridCopy = arrayClone(this.state.gridFull);
+       gridCopy[row][col] = !gridCopy[row][col];
+        
+    this.setState(() => ({ gridFull: gridCopy}));
   };
 
   seed = () => {
-    const gridFull = this.state.gridFull.map(rowArr =>
-      rowArr.map(() => Math.floor(Math.random() * 4) === 1)
-    );
-    this.setState(() => ({ gridFull }));
+    let gridCopy = arrayClone(this.state.gridFull);
+		for (let i = 0; i < this.rows; i++) {
+			for (let j = 0; j < this.cols; j++) {
+				if (Math.floor(Math.random() * 4) === 1) {
+					gridCopy[i][j] = true;
+				}
+			}
+		}
+    this.setState({
+			gridFull: gridCopy
+		});
+    
   };
 
   playButton = () => {
@@ -150,12 +159,12 @@ class Main extends React.Component {
   };
 
   clear = () => {
-    const gridFull = Array(this.rows)
+    const grid = Array(this.rows)
       .fill()
       .map(() => Array(this.cols).fill(false));
 
     this.setState(() => ({
-      gridFull,
+      gridFull: grid,
       generation: 0
     }));
   };
@@ -196,11 +205,15 @@ class Main extends React.Component {
         if (!g[i][j] && count === 3) g2[i][j] = true;
       }
     }
-    this.setState(prevState => ({
+    this.setState({
       gridFull: g2,
-      generation: prevState.generation + 1
-    }));
+      generation: this.state.generation + 1
+    });
   };
+  componentDidMount() {
+    this.seed()
+    this.playButton();
+  }
 
   render() {
     return (
@@ -226,5 +239,7 @@ class Main extends React.Component {
     );
   }
 }
+
+
 
 ReactDOM.render(<Main />, document.getElementById("root"));
